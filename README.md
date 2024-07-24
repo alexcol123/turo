@@ -35,14 +35,20 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
-voy Readme line 1348
+voy Readme line 2686
 
 TO DO
 
--- format currrncy 2591
--- property rating
-
 -- vehicle page only id
 -- edit vehicle
+-- make favorite work
+
+-- add rating
+
+
+
+-- property rating
+
+
 
 --AFTER IM DONE WITH VEHICLE RENTAL, ADD TO SCHEMA , CITY , COUNTY AND STATE , SO THAT I CAN NAROW SEARCH BY CITY OR STATE - LIKE CHAO CHARLES DID
