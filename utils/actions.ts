@@ -211,3 +211,23 @@ export const fetchVehicles = async ({
   return vehicles
 
 }
+
+
+export const toggleFavoriteAction = async (prevState: {
+  propertyId: string;
+  favoriteId: string | null;
+  pathname: string;
+}) => {
+
+  const user = await getAuthUser()
+  const { propertyId, favoriteId, pathname } = prevState
+  console.log({ propertyId, favoriteId, pathname })
+
+  try {
+return{message: 'Property added to favorites'}
+  } catch (error) {
+    return renderError(error)
+  }
+  revalidatePath(pathname)
+  return { message: favoriteId ? 'Property removed from favorites' : 'Property added to favorites' }
+}

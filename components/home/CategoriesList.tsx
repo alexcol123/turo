@@ -24,7 +24,7 @@ const CategoriesList = ({ type, search }: SearchParams) => {
               >
                 <article className='relative p-3 flex flex-col items-center cursor-pointer duration-300   w-[260px] select-none'>
 
-                  <div className={`absolute capitalize text-sm  border  top-0 bottom-0  transition left-0 right-0  bg-black/60   rounded-md px-2 hover:bg-black/40  ${isActive ? ' border-primary' : 'border-primary-foreground'}`}>
+                  <div className={`absolute capitalize text-sm  border  top-0 bottom-0  transition left-0 right-0  dark:bg-black/60  bg-black/20  rounded-md px-2 hover:bg-black/40  ${isActive ? ' border-primary' : 'border-primary-foreground'}`}>
 
                     <div className="flex items-center justify-center h-full w-full text-lg font-bold">
                       <p className={`absolute top-5 px-2  rounded-sm ${isActive ? 'bg-primary text-primary-foreground' : 'bg-primary-foreground text-primary'} `}>{item.name}</p>

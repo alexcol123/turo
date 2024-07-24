@@ -26,40 +26,69 @@ import { IoSpeedometer, IoSpeedometerOutline } from "react-icons/io5";
 import { CheckIcon } from "lucide-react"
 import Link from "next/link"
 import { VehicleCardProps } from "../home/VehicleList"
+import { formatCurrency } from "@/utils/format"
+import VehicleRating from "./VehicleRating"
+import FavoriteToggleForm from "./FavoriteToggleForm"
 
 
 const VehicleCard = ({ vehicle }: { vehicle: VehicleCardProps }) => {
 
   const { id, make, model, year, price, image, type, seats, doors, } = vehicle
 
+
+
+
   return (
     <div >
       <Card className="w-full h-full ">
         <CardHeader>
-          <CardTitle> {year} {make} {model}
+          <CardTitle >
+            <div className="flex justify-between items-center">
+              <div className="text-lg">   {year} {make} {model}</div>
+              <p className="capitalize border py-1 px-2 rounded-lg bg-primary text-primary-foreground text-xs">  {type}</p>
+            </div>
+
+
           </CardTitle>
           <CardDescription>
             <div className="w-full flex justify-between items-center">
-              <p className="font-semibold">    Price: ${price}/day</p>
-              <p className="capitalize border py-1 px-2 rounded-lg bg-primary text-primary-foreground">  {type}</p>
+              <p className="font-semibold">    Price: {formatCurrency(price)}/day</p>
+
+              <VehicleRating />
             </div>
+
           </CardDescription>
 
+
+
+
         </CardHeader>
-        <CardContent>
+        <CardContent className="relative">
           <Image width={500} height={500} alt='vehicle image' src={image} className="object-cover rounded-md" />
 
-          <div className="flex justify-center items-center w-full">
+          <div className="absolute top-2 right-8">
+            <FavoriteToggleForm />
+          </div>
+
+          <div className="flex justify-center items-center w-full mb-2">
             <ul className="flex justify-center items-center gap-4  bg-muted mt-4 w-fit px-2 rounded-sm">
               <li className="flex items-center justify-center gap-1 "> <GiCarSeat /> {seats}</li>
               <li className="flex items-center justify-center gap-1 "> <GiCarDoor /> {doors}</li>
               <li className="flex items-center justify-center gap-1 "> <IoSpeedometerOutline /> 4.8 s</li>
             </ul>
+
+
           </div>
+
+
+
         </CardContent>
 
 
         <CardFooter className="flex items-center justify-center gap-2">
+
+
+
           <Button variant={'outline'} className="w-full">
             <CheckIcon className="mr-2 h-4 w-4" /> Book Now
           </Button>
