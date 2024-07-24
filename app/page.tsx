@@ -1,10 +1,29 @@
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import LoadingCards from "@/components/card/LoadingCards";
+import VehicleCard from "@/components/card/VehicleCard";
+import CategoriesList from "@/components/home/CategoriesList";
+import VehiclesContainer from "@/components/home/VehiclesContainer";
 
-export default function Home() {
+import { Suspense } from "react"
+
+export type SearchParams = {
+  type?: string
+  search?: string
+}
+
+
+
+export default function Home({ searchParams }: { searchParams: SearchParams }) {
   return (
-   <div>
-  <Button variant={'destructive'}>Click me</Button>
-   </div>
+    <section>
+
+      <CategoriesList type={searchParams.type} search={searchParams.search} />
+
+      <Suspense fallback={<LoadingCards />}>
+        <VehiclesContainer type={searchParams.type} search={searchParams.search} />
+      </Suspense>
+
+    </section>
+
+
   );
 }

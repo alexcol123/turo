@@ -39,8 +39,10 @@ voy Readme line 1348
 
 TO DO
 
--- create github
--- display vehicels
+-- investigate how he did params
+-- add search
+
+-- vehicle page only id
 -- edit vehicle
 
 --AFTER IM DONE WITH VEHICLE RENTAL, ADD TO SCHEMA , CITY , COUNTY AND STATE , SO THAT I CAN NAROW SEARCH BY CITY OR STATE - LIKE CHAO CHARLES DID

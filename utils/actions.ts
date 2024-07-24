@@ -7,6 +7,7 @@ import { redirect } from 'next/navigation'
 import { imageSchema, profileSchema, validateWithZodSchema, vehicleSchema } from './schemas'
 import { error } from 'console'
 import { uploadImage } from './supabase'
+import { EnumValues } from 'zod'
 
 
 const getAuthUser = async () => {
@@ -168,4 +169,45 @@ export const createVehicleAction = async (
     return renderError(error)
   }
   redirect('/')
+}
+
+export const fetchVehicles = async ({
+  search = '',
+  type,
+}: {
+  search?: string
+  type?: string
+}) => {
+
+
+  // add a 2 second delay to simulate a slow network
+  await new Promise((resolve) => setTimeout(resolve, 2000))
+
+  const vehicles = await db.vehicle.findMany({
+
+    where: {
+      type: type as any,
+      OR: [
+        { make: { contains: search, mode: 'insensitive' }, },
+        { model: { contains: search, mode: 'insensitive' } },
+      ]
+    },
+    select: {
+      id: true,
+      make: true,
+      model: true,
+      year: true,
+      price: true,
+      image: true,
+      type: true,
+      seats: true,
+      doors: true,
+    },
+    orderBy: {
+      createdAt: 'desc'
+    }
+  }
+  )
+  return vehicles
+
 }
