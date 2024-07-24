@@ -1,7 +1,7 @@
 import VehicleCard from "../card/VehicleCard"
 
 export type VehicleCardProps = {
-  id: number
+  id: string
   make: string
   model: string,
   year: number,

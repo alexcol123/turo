@@ -39,8 +39,8 @@ voy Readme line 1348
 
 TO DO
 
--- investigate how he did params
--- add search
+-- format currrncy 2591
+-- property rating
 
 -- vehicle page only id
 -- edit vehicle

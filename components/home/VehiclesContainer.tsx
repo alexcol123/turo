@@ -7,6 +7,7 @@ import VehicleList from "./VehicleList"
 const VehiclesContainer = async ({ type, search }: SearchParams) => {
 
   const vehicles = await fetchVehicles({ type, search })
+  
   if (vehicles.length === 0) {
     return (
       <EmptyList

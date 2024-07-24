@@ -34,7 +34,7 @@ const VehicleCard = ({ vehicle }: { vehicle: VehicleCardProps }) => {
 
   return (
     <div >
-      <Card className="w-full ">
+      <Card className="w-full h-full ">
         <CardHeader>
           <CardTitle> {year} {make} {model}
           </CardTitle>
