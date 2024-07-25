@@ -29,6 +29,7 @@ import { VehicleCardProps } from "../home/VehicleList"
 import { formatCurrency } from "@/utils/format"
 import VehicleRating from "./VehicleRating"
 import FavoriteToggleForm from "./FavoriteToggleForm"
+import FavoriteToggleButton from "./FavoriteToggleButton"
 
 
 const VehicleCard = ({ vehicle }: { vehicle: VehicleCardProps }) => {
@@ -67,7 +68,7 @@ const VehicleCard = ({ vehicle }: { vehicle: VehicleCardProps }) => {
           <Image width={500} height={500} alt='vehicle image' src={image} className="object-cover rounded-md" />
 
           <div className="absolute top-2 right-8">
-            <FavoriteToggleForm />
+            <FavoriteToggleButton vehicleId={id} />
           </div>
 
           <div className="flex justify-center items-center w-full mb-2">

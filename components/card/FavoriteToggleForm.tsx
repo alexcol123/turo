@@ -7,11 +7,24 @@ import { CardSubmitButton } from '../form/Buttons'
 import { toggleFavoriteAction } from '@/utils/actions'
 
 
-function FavoriteToggleForm() {
+type FavoriteToggleFormProps = {
+  vehicleId: string
+  favoriteId: string | null
+}
+
+function FavoriteToggleForm({ vehicleId,
+  favoriteId, }: FavoriteToggleFormProps) {
+
+  const pathname = usePathname()
+  const toggleAction = toggleFavoriteAction.bind(null, {
+    vehicleId,
+    favoriteId,
+    pathname,
+  })
 
   return (
-    <FormContainer action={toggleFavoriteAction}>
-      <CardSubmitButton isFavorite={false} />
+    <FormContainer action={toggleAction}>
+         <CardSubmitButton isFavorite={favoriteId ? true : false} />
     </FormContainer>
   )
 }
