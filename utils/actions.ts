@@ -4,7 +4,7 @@ import db from './db'
 import { auth, clerkClient, currentUser } from '@clerk/nextjs/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import { imageSchema, profileSchema, validateWithZodSchema, vehicleSchema } from './schemas'
+import { createReviewSchema, imageSchema, profileSchema, validateWithZodSchema, vehicleSchema } from './schemas'
 import { error } from 'console'
 import { uploadImage } from './supabase'
 import { EnumValues } from 'zod'
@@ -292,4 +292,61 @@ export const fetchFavorites = async () => {
   const onlyVehicles = favorites.map((favorite) => favorite.vehicle)
   return onlyVehicles
 
+}
+
+//  review actions
+
+
+export const createReviewAction = async (prevState: any, formData: FormData) => {
+  const user = await getAuthUser()
+
+  try {
+    const rawData = Object.fromEntries(formData)
+
+    const validatedFields = validateWithZodSchema(createReviewSchema, rawData)
+
+    await db.review.create({
+      data: {
+        ...validatedFields,
+        profileId: user.id
+      }
+    })
+
+    revalidatePath(`/vehicles/${validatedFields.vehicleId}`)
+    return { message: 'Review submitted successfully' }
+  } catch (error) {
+    return renderError(error)
+  }
+}
+
+export async function fetchVehicleReviews(vehicleId: string) {
+  const reviews = await db.review.findMany({
+    where: {
+      vehicleId,
+    },
+    select: {
+      id: true,
+      rating: true,
+      comment: true,
+      profile: {
+        select: {
+          firstName: true,
+          lastName: true,
+          profileImage: true,
+        }
+      }
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  })
+  return reviews
+}
+
+export const fetchPropertyReviewsByUser = async () => {
+  return { message: 'fetch user reviews' }
+}
+
+export const deleteReviewAction = async () => {
+  return { message: 'delete  reviews' }
 }

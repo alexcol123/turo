@@ -96,3 +96,10 @@ export const vehicleSchema = z.object({
     }
   ),
 })
+
+
+export const createReviewSchema = z.object({
+  vehicleId: z.string(),
+  rating: z.coerce.number().int().min(1).max(5),
+  comment: z.string().min(10).max(1000),
+})

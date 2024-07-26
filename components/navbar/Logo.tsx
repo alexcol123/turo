@@ -6,14 +6,16 @@ import Link from "next/link";
 const Logo = () => {
   return (
 
-    <Button size={'icon'} asChild >
-    <Link href='/'>
+    <Button size={'default'} asChild >
+      <Link href='/' className="flex  items-center justify-center gap-2">
 
-      <IoCarSport className="w-7 h-7" />
+        <p className=" tracking-wider text-lg "> TURO</p>
 
-    </Link>
+        <IoCarSport size={23} />
 
-  </Button>
+      </Link>
+
+    </Button>
   )
 }
 export default Logo

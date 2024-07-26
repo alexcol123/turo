@@ -13,6 +13,8 @@ import { Separator } from "@/components/ui/separator"
 import { redirect } from "next/navigation"
 import Description from "@/components/vehicles/Description"
 import Amenities from "@/components/vehicles/Amenities"
+import VehicleReview from "@/components/review/VehicleReview"
+import SubmitReview from "@/components/review/SubmitReview"
 
 const SingleVehiclePage = async ({ params }: { params: { id: string } }) => {
 
@@ -75,6 +77,11 @@ const SingleVehiclePage = async ({ params }: { params: { id: string } }) => {
 
 
       </section>
+
+      <SubmitReview vehicleId={vehicleId} />
+
+      <VehicleReview vehicleId={vehicleId} />
+
     </section>
 
   )
