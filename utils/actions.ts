@@ -181,7 +181,7 @@ export const fetchVehicles = async ({
 
 
   // add a 2 second delay to simulate a slow network
-  await new Promise((resolve) => setTimeout(resolve, 2000))
+  // await new Promise((resolve) => setTimeout(resolve, 2000))
 
   const vehicles = await db.vehicle.findMany({
 
