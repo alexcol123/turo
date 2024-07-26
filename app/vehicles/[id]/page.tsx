@@ -10,7 +10,6 @@ import { fetchVehicle } from "@/utils/actions"
 
 import { Separator } from "@/components/ui/separator"
 
-import Image from "next/image"
 import { redirect } from "next/navigation"
 import Description from "@/components/vehicles/Description"
 import Amenities from "@/components/vehicles/Amenities"
