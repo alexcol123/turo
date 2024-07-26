@@ -1,9 +1,10 @@
 'use client'
 
-import { carMakesAndModelsTypes } from "@/app/my-vehicles/create/page"
+
 import FormSelect from "./FormSelect"
 import { useEffect, useState } from "react"
 import FormSelectMake from "./FormSelectMake"
+import { carMakesAndModelsTypes } from "@/utils/types"
 
 
 

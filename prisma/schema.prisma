@@ -37,6 +37,7 @@ model Profile {
 
   vehicles  Vehicle[]
   favorites Favorite[]
+  reviews   Review[]
 }
 
 model Vehicle {
@@ -60,6 +61,7 @@ model Vehicle {
   profileId String
 
   favorites Favorite[]
+  reviews   Review[]
 }
 
 model Favorite {
@@ -72,6 +74,20 @@ model Favorite {
 
   vehicle   Vehicle @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
   vehicleId String
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  rating    Int
+  comment   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Profile   Profile? @relation(fields: [profileId], references: [clerkId], onDelete: Cascade )
+  profileId String?
+
+  Vehicle   Vehicle? @relation(fields: [vehicleId], references: [id] , onDelete: Cascade)
+  vehicleId String?
 }
 
 enum Type {
