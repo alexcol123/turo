@@ -212,6 +212,18 @@ export const fetchVehicles = async ({
 
 }
 
+export const fetchVehicle = async (id: string) => {
+  const vehicle = await db.vehicle.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      profile: true,
+    }
+  })
+  return vehicle
+}
+
 
 
 export const fetchFavoriteId = async ({
@@ -270,9 +282,14 @@ export const fetchFavorites = async () => {
 
   const favorites = await db.favorite.findMany({
     where: {
-      profileId: user.id,
+      profileId: user.id
     },
-
+    select: {
+      vehicle: true,
+    }
   })
+
+  const onlyVehicles = favorites.map((favorite) => favorite.vehicle)
+  return onlyVehicles
 
 }

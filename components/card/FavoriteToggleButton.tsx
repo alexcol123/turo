@@ -5,10 +5,6 @@ import { CardSignInButton } from '../form/Buttons'
 import FavoriteToggleForm from './FavoriteToggleForm'
 import { fetchFavoriteId } from '@/utils/actions'
 
-
-
-
-
 async function FavoriteToggleButton({ vehicleId }: { vehicleId: string }) {
 
   const { userId } = auth()
@@ -17,12 +13,8 @@ async function FavoriteToggleButton({ vehicleId }: { vehicleId: string }) {
 
   const favoriteId = await fetchFavoriteId({ vehicleId })
 
-
-
-
   return (
     <FavoriteToggleForm vehicleId={vehicleId} favoriteId={favoriteId} />
-
   )
 }
 export default FavoriteToggleButton

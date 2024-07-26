@@ -36,32 +36,24 @@ const VehicleCard = ({ vehicle }: { vehicle: VehicleCardProps }) => {
 
   const { id, make, model, year, price, image, type, seats, doors, } = vehicle
 
-
-
-
   return (
     <div >
       <Card className="w-full h-full ">
         <CardHeader>
           <CardTitle >
             <div className="flex justify-between items-center">
-              <div className="text-lg">   {year} {make} {model}</div>
+              <p className="text-lg">   {year} {make} {model}</p>
               <p className="capitalize border py-1 px-2 rounded-lg bg-primary text-primary-foreground text-xs">  {type}</p>
             </div>
 
-
           </CardTitle>
-          <CardDescription>
-            <div className="w-full flex justify-between items-center">
-              <p className="font-semibold">    Price: {formatCurrency(price)}/day</p>
+          <CardDescription className="flex justify-between items-center ">
 
-              <VehicleRating />
-            </div>
+
+            <span className="font-semibold"> Price: {formatCurrency(price)} /day</span>
+            <VehicleRating />
 
           </CardDescription>
-
-
-
 
         </CardHeader>
         <CardContent className="relative">
@@ -77,19 +69,11 @@ const VehicleCard = ({ vehicle }: { vehicle: VehicleCardProps }) => {
               <li className="flex items-center justify-center gap-1 "> <GiCarDoor /> {doors}</li>
               <li className="flex items-center justify-center gap-1 "> <IoSpeedometerOutline /> 4.8 s</li>
             </ul>
-
-
           </div>
-
-
 
         </CardContent>
 
-
         <CardFooter className="flex items-center justify-center gap-2">
-
-
-
           <Button variant={'outline'} className="w-full">
             <CheckIcon className="mr-2 h-4 w-4" /> Book Now
           </Button>
