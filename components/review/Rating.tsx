@@ -8,7 +8,6 @@ function Rating({ rating }: { rating: number }) {
   // ....
   const stars = Array.from({ length: 5 }, (_, i) => i + 1 <= rating)
 
-  console.log(stars)
 
   return (
     <div className='flex items-center gap-x-1'>

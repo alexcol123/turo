@@ -6,7 +6,7 @@ import ImageContainer from "@/components/vehicles/ImageContainer"
 import ShareButton from "@/components/vehicles/ShareButton"
 import UserInfo from "@/components/vehicles/UserInfo"
 import VehicleDetails from "@/components/vehicles/VehicleDetails"
-import { fetchVehicle } from "@/utils/actions"
+import { fetchVehicle, findExistingReview } from "@/utils/actions"
 
 import { Separator } from "@/components/ui/separator"
 
@@ -15,8 +15,10 @@ import Description from "@/components/vehicles/Description"
 import Amenities from "@/components/vehicles/Amenities"
 import VehicleReview from "@/components/review/VehicleReview"
 import SubmitReview from "@/components/review/SubmitReview"
+import { auth } from "@clerk/nextjs/server"
 
 const SingleVehiclePage = async ({ params }: { params: { id: string } }) => {
+  const { userId } = auth()
 
   const vehicle = await fetchVehicle(params.id)
 
@@ -26,11 +28,25 @@ const SingleVehiclePage = async ({ params }: { params: { id: string } }) => {
 
   const details = { doors, seats, }
 
-  const { id: profileId, firstName, lastName, username, email, profileImage } = profile
+  const { firstName, lastName, username, email, profileImage, clerkId } = profile
 
   const amenities = { type, mileage, gastype, color }
 
   const listingName = `${make} - ${model} `
+
+  const isNotOwner = userId !== clerkId
+
+
+
+  const reviewDoesNotExist = userId && isNotOwner && !(await findExistingReview(userId, vehicleId))
+
+
+
+  // console.log("review front ", review)
+  // console.log('Is there a fucking review?')
+  // console.log(review)
+
+  // const reviewExists = await findExistingReview ({ vehicleId, profileId }) ? true : false
 
   return (
     <section>
@@ -77,8 +93,12 @@ const SingleVehiclePage = async ({ params }: { params: { id: string } }) => {
 
 
       </section>
+      {reviewDoesNotExist && (
+        <SubmitReview vehicleId={vehicleId} />
 
-      <SubmitReview vehicleId={vehicleId} />
+      )}
+
+
 
       <VehicleReview vehicleId={vehicleId} />
 

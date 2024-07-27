@@ -254,7 +254,7 @@ export const toggleFavoriteAction = async (prevState: {
 
   const user = await getAuthUser()
   const { vehicleId, favoriteId, pathname } = prevState
-  console.log({ vehicleId, favoriteId, pathname })
+
 
   try {
     if (favoriteId) {
@@ -343,10 +343,73 @@ export async function fetchVehicleReviews(vehicleId: string) {
   return reviews
 }
 
-export const fetchPropertyReviewsByUser = async () => {
-  return { message: 'fetch user reviews' }
+export const fetchVehiclesReviewsByUser = async () => {
+
+  const user = await getAuthUser()
+
+  const reviews = await db.review.findMany({
+    where: {
+      profileId: user.id,
+    },
+    select: {
+      id: true,
+      rating: true,
+      comment: true,
+      Vehicle: {
+        select: {
+          make: true,
+          model: true,
+          year: true,
+          image: true,
+        }
+      }
+    },
+
+    orderBy: {
+      createdAt: 'desc'
+    }
+  })
+
+  return reviews
+
+
 }
 
-export const deleteReviewAction = async () => {
-  return { message: 'delete  reviews' }
+export const deleteReviewAction = async (prevState: { reviewId: string }) => {
+
+  const { reviewId } = prevState
+  const user = await getAuthUser()
+
+  try {
+    await db.review.delete({
+      where: {
+        id: reviewId,
+        profileId: user.id
+      }
+    })
+    revalidatePath('/profile')
+    return { message: 'Review deleted successfully' }
+
+  } catch (error) {
+    return renderError(error)
+  }
+
+}
+
+
+
+export const findExistingReview = async (vehicleId: string, userId: string) => {
+
+
+  const review = await db.review.findFirst({
+    where: {
+      vehicleId,
+      profileId: userId,
+    },
+  })
+
+  console.log(review)
+
+
+  return null
 }
