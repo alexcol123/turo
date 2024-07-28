@@ -413,3 +413,31 @@ export const findExistingReview = async (vehicleId: string, userId: string) => {
 
   return null
 }
+
+export const fetchVehicleRating = async (vehicleId: string) => {
+
+
+  const result = await db.review.groupBy({
+    by: ['vehicleId'],
+
+    _avg: {
+      rating: true,
+    },
+    _count: {
+      rating: true,
+    },
+    where: {
+      vehicleId,
+    },
+
+
+  })
+
+
+
+  return {
+    rating: result[0]?._avg.rating?.toFixed(1) ?? 0,
+    count: result[0]?._count.rating ?? 0,
+  }
+}
+

@@ -51,7 +51,7 @@ const VehicleCard = ({ vehicle }: { vehicle: VehicleCardProps }) => {
 
 
             <span className="font-semibold"> Price: {formatCurrency(price)} /day</span>
-            <VehicleRating />
+            <VehicleRating vehicleId={vehicle.id} inPage={false}  /> 
 
           </CardDescription>
 

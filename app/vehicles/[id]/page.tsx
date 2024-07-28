@@ -68,7 +68,7 @@ const SingleVehiclePage = async ({ params }: { params: { id: string } }) => {
         <div className='lg:col-span-8'>
           <div className='flex gap-x-4 items-center'>
             <h1 className='text-xl font-bold'>{year} - {listingName} </h1>
-            <VehicleRating />
+            <VehicleRating  vehicleId={vehicleId} inPage={true}/>
           </div>
 
           <VehicleDetails details={details} />
