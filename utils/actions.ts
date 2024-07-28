@@ -444,15 +444,15 @@ export const fetchVehicleRating = async (vehicleId: string) => {
 
 
 export const fetchVehicleDetails = async (id: string) => {
-  return db.vehicle.findUnique({
+  const vehicleInfo = await db.vehicle.findUnique({
     where: { id },
     include: {
       profile: true,
-      bookings: {
-        select: {
-          checkIn: true, checkOut: true
-        }
-      }
+
+      bookings: true
     }
   })
+
+  return vehicleInfo
 }
+
