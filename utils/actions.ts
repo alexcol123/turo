@@ -8,6 +8,7 @@ import { createReviewSchema, imageSchema, profileSchema, validateWithZodSchema, 
 import { error } from 'console'
 import { uploadImage } from './supabase'
 import { EnumValues } from 'zod'
+import { calculateTotals } from './calculatTotals'
 
 
 const getAuthUser = async () => {
@@ -456,3 +457,49 @@ export const fetchVehicleDetails = async (id: string) => {
   return vehicleInfo
 }
 
+export const createBookingAction = async (prevState: {
+  vehicleId: string,
+  checkIn: Date,
+  checkOut: Date
+}) => {
+  const user = await getAuthUser()
+
+  const { vehicleId, checkIn, checkOut } = prevState
+
+  const vehicle = await db.vehicle.findUnique({
+    where: { id: vehicleId },
+    select: {
+      price: true
+    }
+  })
+
+
+  if (!vehicle) {
+    return { message: 'Property not found' }
+  }
+
+
+  const { orderTotal, totalNights } = calculateTotals({
+    checkIn, checkOut, price: vehicle.price
+  })
+
+
+  try {
+
+    await db.booking.create({
+      data: {
+        checkIn,
+        checkOut,
+        orderTotal,
+        totalNights,
+        profileId: user.id,
+        vehicleId,
+      }
+    })
+
+  } catch (error) {
+    return renderError(error)
+  }
+
+  redirect('/bookings')
+}

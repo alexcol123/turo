@@ -16,10 +16,10 @@ const BookingContainer = () => {
 
 
   return (
-    <>
+    <div className='w-full'>
       <BookingForm />
       <ConfirmBooking />
-    </>
+    </div>
   )
 }
 export default BookingContainer
