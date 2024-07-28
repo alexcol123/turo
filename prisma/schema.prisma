@@ -38,6 +38,7 @@ model Profile {
   vehicles  Vehicle[]
   favorites Favorite[]
   reviews   Review[]
+  Booking   Booking[]
 }
 
 model Vehicle {
@@ -62,6 +63,8 @@ model Vehicle {
 
   favorites Favorite[]
   reviews   Review[]
+
+  bookings Booking[]
 }
 
 model Favorite {
@@ -87,6 +90,24 @@ model Review {
   profileId String?
 
   Vehicle   Vehicle? @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+  vehicleId String?
+}
+
+model Booking {
+  id String @id @default(uuid())
+
+  orderTotal    Int
+  totalNights   Int
+  checkIn       DateTime
+  checkOut      DateTime
+  paymentStatus Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  profile   Profile @relation(fields: [profileId], references: [clerkId], onDelete: Cascade)
+  profileId String
+
+  Vehicle   Vehicle? @relation(fields: [vehicleId], references: [id])
   vehicleId String?
 }
 

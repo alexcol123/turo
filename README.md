@@ -39,13 +39,7 @@ voy Readme line 4358
 
 TO DO
 
--- deploy
 -- edit vehicle
--- make favorite work
-
--- add rating - in page and in card
-
--- property rating
 
 -- add map dinamyc on single car page -- README 3590 in order to do that i need to add state and county to Vehicle
 -- do lazu loadin to map
