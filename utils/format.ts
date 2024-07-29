@@ -25,3 +25,4 @@ export const formatDate = (date: Date, onlyMonth?: boolean) => {
 
   return new Intl.DateTimeFormat('en-US', options).format(date)
 }
+

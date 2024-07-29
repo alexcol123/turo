@@ -503,3 +503,102 @@ export const createBookingAction = async (prevState: {
 
   redirect('/bookings')
 }
+
+
+export const fetchBookings = async () => {
+  const user = await getAuthUser()
+  const bookings = await db.booking.findMany({
+    where: {
+      profileId: user.id,
+    },
+    include: {
+      Vehicle: {
+        select: {
+          id: true,
+          make: true,
+          model: true,
+          year: true,
+
+        },
+      },
+    },
+    orderBy: {
+      checkIn: 'desc',
+    },
+  })
+  return bookings
+}
+
+export async function deleteBookingAction(prevState: { bookingId: string }) {
+  const { bookingId } = prevState
+  const user = await getAuthUser()
+
+  try {
+    const result = await db.booking.delete({
+      where: {
+        id: bookingId,
+        profileId: user.id,
+      },
+    })
+
+    revalidatePath('/bookings')
+    return { message: 'Booking deleted successfully' }
+  } catch (error) {
+    return renderError(error)
+  }
+}
+
+
+export const fetchRentals = async () => {
+  const user = await getAuthUser()
+
+  const rentals = await db.vehicle.findMany({
+    where: { profileId: user.id },
+    orderBy: { createdAt: 'desc' },
+  })
+
+
+  const rentalsWithBookingSums = await Promise.all(rentals.map(async (rental) => {
+
+    const totalNightsSum = await db.booking.aggregate({
+      where: { vehicleId: rental.id },
+      _sum: { totalNights: true }
+    })
+
+    const orderTotalSum = await db.booking.aggregate({
+      where: { vehicleId: rental.id },
+      _sum: { orderTotal: true }
+    })
+
+
+    return {
+      ...rental,
+      totalNightsSum: totalNightsSum._sum.totalNights,
+      orderTotalSum: orderTotalSum._sum.orderTotal,
+    }
+
+  }))
+
+  return rentalsWithBookingSums
+}
+
+
+
+export async function deleteRentalAction(prevState: { vehicleId: string }) {
+  const { vehicleId } = prevState
+  const user = await getAuthUser()
+
+  try {
+    await db.vehicle.delete({
+      where: {
+        id: vehicleId,
+        profileId: user.id,
+      },
+    })
+
+    revalidatePath('/rentals')
+    return { message: 'Rental deleted successfully' }
+  } catch (error) {
+    return renderError(error)
+  }
+}

@@ -57,7 +57,7 @@ const VehicleCard = ({ vehicle }: { vehicle: VehicleCardProps }) => {
 
         </CardHeader>
         <CardContent className="relative">
-          <Image width={500} height={500} alt='vehicle image' src={image} className="object-cover rounded-md" />
+          <Image width={500} height={300} alt='vehicle image' src={image} className="object-cover rounded-md h-[185px]" />
 
           <div className="absolute top-2 right-8">
             <FavoriteToggleButton vehicleId={id} />
