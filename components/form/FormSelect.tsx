@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/select'
 import { Label } from "../ui/label"
 
-const FormSelect = ({ name, label, list, isColor = false }: { name: string, label?: string, list: any, defaultValue?: any, isColor?: boolean }) => {
+const FormSelect = ({ name, label, list, isColor = false, defaultValue='' }: { name: string, label?: string, list: any, defaultValue?: any, isColor?: boolean }) => {
 
 
 
@@ -19,7 +19,7 @@ const FormSelect = ({ name, label, list, isColor = false }: { name: string, labe
         {label || name}
       </Label>
       <Select
-      
+      defaultValue={ defaultValue }
         name={name}
         required
 

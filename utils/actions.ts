@@ -604,21 +604,37 @@ export async function deleteRentalAction(prevState: { vehicleId: string }) {
 }
 
 
-export const fetchRentalDetails = async (vehicleId: string) => {
+
+
+export const updateVehicleAction = async (
+  prevState: any,
+  formData: FormData
+): Promise<{ message: string }> => {
   const user = await getAuthUser()
+  const vehicleId = formData.get('id') as string
+  console.log(vehicleId, 'vehicleId')
 
-  return db.vehicle.findUnique({
-    where: {
-      id: vehicleId,
-      profileId: user.id,
-    },
-  })
+  try {
+    const rawData = Object.fromEntries(formData)
+
+    const validatedFields = validateWithZodSchema(vehicleSchema, rawData)
+    await db.vehicle.update({
+      where: {
+        id: vehicleId,
+        profileId: user.id,
+      },
+      data: {
+        ...validatedFields,
+      },
+    })
+
+    revalidatePath(`/my-vehicles/${vehicleId}/edit`)
+    return { message: 'Update Successful' }
+  } catch (error) {
+    return renderError(error)
+  }
 }
 
-export const updatePropertyAction = async () => {
-  return { message: 'update property action' }
-}
-
-export const updatePropertyImageAction = async () => {
+export const updateVehicleImageAction = async () => {
   return { message: 'update property image' }
 }

@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/select'
 import { Label } from "../ui/label"
 
-const FormSelectMake = ({ name, label, list, isColor = false, setmakeSelected }: { name: string, label?: string, list: any, defaultValue?: any, isColor?: boolean, setmakeSelected?: any }) => {
+const FormSelectMake = ({ name, label, list, isColor = false, setmakeSelected , defaultMake}: { name: string, label?: string, list: any, defaultValue?: any, isColor?: boolean, setmakeSelected?: any, defaultMake?: string }) => {
 
 
 
@@ -22,6 +22,7 @@ const FormSelectMake = ({ name, label, list, isColor = false, setmakeSelected }:
         onValueChange={(value) => setmakeSelected(value)}
         name={name}
         required
+        defaultValue={defaultMake}
 
       >
         <SelectTrigger id={name} className="mt-1 ">

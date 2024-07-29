@@ -8,7 +8,7 @@ import { carMakesAndModelsTypes } from "@/utils/types"
 
 
 
-const MakeModel = ({ list }: { list: carMakesAndModelsTypes[] }) => {
+const MakeModel = ({ list, defaultMake, defaultModel }: { list: carMakesAndModelsTypes[], defaultMake?: string, defaultModel: string }) => {
 
 
   const [makeSelected, setmakeSelected] = useState('')
@@ -41,12 +41,20 @@ const MakeModel = ({ list }: { list: carMakesAndModelsTypes[] }) => {
   }, [makeSelected, list])
 
 
+useEffect(() => {
+  if (defaultMake && defaultMake !== '') {
+    setmakeSelected(defaultMake)
+  }
+}, [defaultMake])
+
+
+  
   return (
 
     <div className="grid md:grid-cols-2 gap-8 mb-4" >
-      <FormSelectMake name={'make'} list={carMakes} setmakeSelected={setmakeSelected} />
+      <FormSelectMake name={'make'} list={carMakes} setmakeSelected={setmakeSelected} defaultMake={defaultMake} />
 
-      {makeSelected !== '' && <FormSelect name={'model'} list={carModelList} />}
+      {makeSelected !== '' && <FormSelect name={'model'} list={carModelList} defaultValue={defaultModel} />}
 
     </div>
 
