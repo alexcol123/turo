@@ -596,9 +596,29 @@ export async function deleteRentalAction(prevState: { vehicleId: string }) {
       },
     })
 
-    revalidatePath('/rentals')
+    revalidatePath('/my-vehicles')
     return { message: 'Rental deleted successfully' }
   } catch (error) {
     return renderError(error)
   }
+}
+
+
+export const fetchRentalDetails = async (vehicleId: string) => {
+  const user = await getAuthUser()
+
+  return db.vehicle.findUnique({
+    where: {
+      id: vehicleId,
+      profileId: user.id,
+    },
+  })
+}
+
+export const updatePropertyAction = async () => {
+  return { message: 'update property action' }
+}
+
+export const updatePropertyImageAction = async () => {
+  return { message: 'update property image' }
 }
