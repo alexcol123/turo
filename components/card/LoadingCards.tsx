@@ -7,6 +7,8 @@ const LoadingCards = () => {
       <SkeletonCard />
       <SkeletonCard />
       <SkeletonCard />
+      <SkeletonCard />
+      <SkeletonCard />
     </div>
   )
 }

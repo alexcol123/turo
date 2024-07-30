@@ -1,7 +1,7 @@
 'use server'
 
 import db from './db'
-import { auth, clerkClient, currentUser } from '@clerk/nextjs/server'
+import {  clerkClient, currentUser } from '@clerk/nextjs/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createReviewSchema, imageSchema, profileSchema, validateWithZodSchema, vehicleSchema } from './schemas'

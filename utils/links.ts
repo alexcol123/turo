@@ -6,7 +6,7 @@ type NavLink = {
 
 
 export const mylinks: NavLink[] = [
-  // { href: '/', label: 'home' },
+  { href: '/admin', label: 'admin' },
   { href: '/favorites ', label: 'favorites' },
   { href: '/bookings ', label: 'bookings' },
   { href: '/my-vehicles/create ', label: 'create vehicle rental' },
