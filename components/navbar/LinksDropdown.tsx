@@ -46,7 +46,6 @@ function LinksDropdown() {
 
           {links.map((link) => {
 
-            console.log(link)
             if (link.label === 'admin' && !isAdmin) {
            return   null
             }

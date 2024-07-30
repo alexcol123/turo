@@ -1,5 +1,6 @@
 import { fetchStats } from '@/utils/actions'
 import StatsCard from './StatsCard'
+
 async function StatsContainer() {
   const data = await fetchStats()
 

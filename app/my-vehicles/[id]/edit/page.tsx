@@ -35,8 +35,6 @@ const EditVehiclePage = async ({ params }: { params: { id: string } }) => {
 
   const vehicle = await fetchVehicleDetails(params.id)
 
-  console.log(vehicle)
-
 
   if (!vehicle) { redirect('/') }
 
