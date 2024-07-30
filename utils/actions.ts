@@ -1,7 +1,7 @@
 'use server'
 
 import db from './db'
-import { clerkClient, currentUser } from '@clerk/nextjs/server'
+import {  clerkClient, currentUser } from '@clerk/nextjs/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createReviewSchema, imageSchema, profileSchema, validateWithZodSchema, vehicleSchema } from './schemas'
@@ -9,7 +9,6 @@ import { error, profile } from 'console'
 import { uploadImage } from './supabase'
 import { EnumValues } from 'zod'
 import { calculateTotals } from './calculatTotals'
-import { formatDate } from './format'
 
 
 const getAuthUser = async () => {
@@ -410,6 +409,7 @@ export const findExistingReview = async (vehicleId: string, userId: string) => {
     },
   })
 
+  console.log(review)
 
 
   return null
@@ -612,6 +612,7 @@ export const updateVehicleAction = async (
 ): Promise<{ message: string }> => {
   const user = await getAuthUser()
   const vehicleId = formData.get('id') as string
+  console.log(vehicleId, 'vehicleId')
 
   try {
     const rawData = Object.fromEntries(formData)
@@ -717,48 +718,3 @@ export const fetchStats = async () => {
     bookingsCount,
   }
 }
-
-
-export const fetchChartData = async () => {
-  await getAdminUser()
-
-  const date = new Date()
-  date.setMonth(date.getMonth() - 6)
-  const sixMonthsAgo = date
-
-  const bookings = await db.booking.findMany({
-    where: {
-      createdAt: {
-        gte: sixMonthsAgo,
-      },
-    },
-    orderBy: {
-      createdAt: 'asc',
-    },
-  })
-
-
-
-
-  let bookingsPerMonth = bookings.reduce((total, current) => {
-
-    const date = formatDate(current.createdAt, true)
-
-    const existingEntry = total.find((entry) => entry.date === date)
-
-
-    if (existingEntry) {
-      existingEntry.count += 1
-    } else {
-      total.push({ date, count: 1 })
-    }
-    return total
-  }, [] as Array<{ date: string; count: number }>)
-
-
-  return bookingsPerMonth
-
-}
-
-
-fetchChartData()

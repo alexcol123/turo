@@ -19,4 +19,6 @@ export const useVehicle = create<PropertyState>(() => ({
 
 )
 
+console.log(useVehicle.getState())
+
 
