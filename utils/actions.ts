@@ -5,7 +5,7 @@ import { auth, clerkClient, currentUser } from '@clerk/nextjs/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createReviewSchema, imageSchema, profileSchema, validateWithZodSchema, vehicleSchema } from './schemas'
-import { error } from 'console'
+import { error, profile } from 'console'
 import { uploadImage } from './supabase'
 import { EnumValues } from 'zod'
 import { calculateTotals } from './calculatTotals'
@@ -666,4 +666,35 @@ export const updateVehicleImageAction = async (
   } catch (error) {
     return renderError(error)
   }
+}
+
+
+export const fetchReservations = async () => {
+
+  const user = await getAuthUser()
+
+  const reservations = await db.booking.findMany({
+    where: {
+      Vehicle: {
+        profileId: user.id,
+      },
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+
+    include: {
+      Vehicle: {
+        select: {
+          make: true,
+          model: true,
+          year: true,
+          image: true,
+        },
+      },
+    },
+
+  })
+
+  return reservations
 }

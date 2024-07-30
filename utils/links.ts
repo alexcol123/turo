@@ -5,13 +5,18 @@ type NavLink = {
 
 
 
-export const links: NavLink[] = [
-  { href: '/', label: 'home' },
+export const mylinks: NavLink[] = [
+  // { href: '/', label: 'home' },
   { href: '/favorites ', label: 'favorites' },
   { href: '/bookings ', label: 'bookings' },
-  { href: '/reviews ', label: 'reviews' },
   { href: '/my-vehicles/create ', label: 'create vehicle rental' },
   { href: '/my-vehicles', label: 'my vehicles' },
+  { href: '/reviews ', label: 'reviews' },
+  { href: '/reservations ', label: 'reservations' },
+
 
   { href: '/profile ', label: 'profile' },
 ]
+
+// sort navlinks by  label alphabetically
+export const links = mylinks.sort((a, b) => a.label.localeCompare(b.label))

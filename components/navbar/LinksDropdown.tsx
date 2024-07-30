@@ -14,6 +14,8 @@ import SignOutLink from './SignOutLink'
 
 import { SignedOut, SignedIn, SignInButton, SignUpButton } from '@clerk/nextjs'
 
+import { FaHome } from "react-icons/fa";
+
 
 function LinksDropdown() {
   return (
@@ -27,6 +29,16 @@ function LinksDropdown() {
       <DropdownMenuContent className='w-52' align='start' sideOffset={10}>
 
         <SignedIn>
+
+          <DropdownMenuItem >
+            <Link href={'/'} className='capitalize w-full flex items-center gap-2'>
+              Home
+              <FaHome size={16} className='text-primary' />
+            </Link>
+          </DropdownMenuItem>
+
+          <DropdownMenuSeparator />
+
           {links.map((link) => {
             return (
               <DropdownMenuItem key={link.href}>
