@@ -628,13 +628,42 @@ export const updateVehicleAction = async (
       },
     })
 
-    revalidatePath(`/my-vehicles/${vehicleId}/edit`)
-    return { message: 'Update Successful' }
+    // revalidatePath(`/my-vehicles/${vehicleId}/edit`)
+    // redirect(`/my-vehicles/${vehicleId}/`)
+    //  return { message: 'Update Successful' }
   } catch (error) {
     return renderError(error)
   }
+
+  redirect(`/vehicles/${vehicleId}/`)
 }
 
-export const updateVehicleImageAction = async () => {
-  return { message: 'update property image' }
+
+
+export const updateVehicleImageAction = async (
+  prevState: any,
+  formData: FormData
+): Promise<{ message: string }> => {
+  const user = await getAuthUser()
+  const vehicleId = formData.get('id') as string
+
+  try {
+    const image = formData.get('image') as File
+    const validatedFields = validateWithZodSchema(imageSchema, { image })
+    const fullPath = await uploadImage(validatedFields.image)
+
+    await db.vehicle.update({
+      where: {
+        id: vehicleId,
+        profileId: user.id,
+      },
+      data: {
+        image: fullPath,
+      },
+    })
+    revalidatePath(`/my-vehicles/${vehicleId}/edit`)
+    return { message: 'Property Image Updated Successful' }
+  } catch (error) {
+    return renderError(error)
+  }
 }

@@ -18,6 +18,7 @@ import SubmitReview from "@/components/review/SubmitReview"
 import { auth } from "@clerk/nextjs/server"
 import dynamic from "next/dynamic"
 import { Skeleton } from "@/components/ui/skeleton"
+import { formatCurrency } from "@/utils/format"
 
 
 const DynamicBookingWrapper = dynamic(
@@ -35,7 +36,7 @@ const SingleVehiclePage = async ({ params }: { params: { id: string } }) => {
 
   if (!vehicle) { redirect('/') }
 
-  const { id: vehicleId, type, price, mileage, make, model, year, doors, seats, gastype, color, description, image, profile,  } = vehicle
+  const { id: vehicleId, type, price, mileage, make, model, year, doors, seats, gastype, color, description, image, profile, } = vehicle
 
   const details = { doors, seats, }
 
@@ -65,6 +66,8 @@ const SingleVehiclePage = async ({ params }: { params: { id: string } }) => {
       <header className='flex justify-between items-center mt-4'>
         <h1 className='text-4xl font-bold '>{make}</h1>
         <div className='flex items-center gap-x-4'>
+
+          <p className="text-xl mr-4 font-semibold">   {formatCurrency(price)} <span className="text-primary">/day</span> </p>
 
           <ShareButton name={listingName} propertyId={vehicleId} />
 
@@ -101,7 +104,7 @@ const SingleVehiclePage = async ({ params }: { params: { id: string } }) => {
             vehicleId={vehicleId}
             price={price}
             bookings={vehicle.bookings}
-             />
+          />
         </div>
 
 

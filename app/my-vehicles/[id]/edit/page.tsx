@@ -19,6 +19,8 @@ import ImageInput from '@/components/form/ImageInput'
 import { carMakesAndModels, gastype, vehicleColors, vehicletype } from '@/utils/arrayLists'
 import { redirect } from 'next/navigation'
 import ImageInputContainer from '@/components/form/ImageInputContainer'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
 
 
@@ -66,7 +68,7 @@ const EditVehiclePage = async ({ params }: { params: { id: string } }) => {
 
             <FormContainer action={updateVehicleAction} >
 
-            <input type='hidden' name='id' value={vehicle.id} />
+              <input type='hidden' name='id' value={vehicle.id} />
 
               <TextAreaInput name={'description'} labelText={'Description (10-500 words)'} defaultValue={vehicle.description} />
 
@@ -104,7 +106,15 @@ const EditVehiclePage = async ({ params }: { params: { id: string } }) => {
 
 
 
-              <SubmitButton text='Edit Vehicle ' className='mt-12' />
+              <div className="flex items-center justify-center mt-10 gap-8">
+                <SubmitButton text='Edit Vehicle ' />
+
+                <Button size = 'lg' asChild type='button' variant={'secondary'}>
+                  <Link href={'/my-vehicles'}  > Cancel</Link>
+                </Button>
+
+
+              </div>
             </FormContainer>
 
 
